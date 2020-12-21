@@ -12,6 +12,7 @@ AHorde_PlayerCharacter::AHorde_PlayerCharacter()
 
 	H_CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("Character Camera Component"));
 	H_CameraComponent->SetupAttachment(GetMesh());
+	H_CameraComponent->bUsePawnControlRotation = true;
 
 
 }
@@ -43,11 +44,10 @@ void AHorde_PlayerCharacter::Tick(float DeltaTime)
 // Called to bind functionality to input
 void AHorde_PlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
 	if (PlayerInputComponent != NULL)
 	{
-
+		PlayerInputComponent->BindAxis("Yaw", this, &APawn::AddControllerYawInput);
+		PlayerInputComponent->BindAxis("Pitch", this, &APawn::AddControllerPitchInput);
 	}
 }
 
