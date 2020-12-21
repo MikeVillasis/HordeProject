@@ -48,12 +48,13 @@ void AHorde_PlayerCharacter::WalkSideways(float InputValue)
 
 void AHorde_PlayerCharacter::SimpleJump()
 {
-	if (GetCharacterMovement()->IsMovingOnGround() == true)
+	if (bIsJumping == false)
 	{
 		UCharacterMovementComponent* ThisCharMovementComp = GetCharacterMovement();
 		ThisCharMovementComp->JumpZVelocity = OriginalZVelocity * JumpForce;
 		Super::Jump();
 		bIsJumping = true;
+
 	}
 }
 
