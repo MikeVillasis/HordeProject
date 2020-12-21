@@ -3,6 +3,7 @@
 
 #include "Player/Horde_PlayerCharacter.h"
 #include "Camera/CameraComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
 AHorde_PlayerCharacter::AHorde_PlayerCharacter()
@@ -13,6 +14,11 @@ AHorde_PlayerCharacter::AHorde_PlayerCharacter()
 	H_CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("Character Camera Component"));
 	H_CameraComponent->SetupAttachment(GetMesh());
 	H_CameraComponent->bUsePawnControlRotation = true;
+
+	UCharacterMovementComponent* ThisCharMovementComp = GetCharacterMovement();
+	OriginalZVelocity = ThisCharMovementComp->JumpZVelocity;
+
+	bIsJumping = false;
 
 
 }
@@ -26,12 +32,30 @@ void AHorde_PlayerCharacter::BeginPlay()
 
 void AHorde_PlayerCharacter::WalkForward(float InputValue)
 {
-
+	if (InputValue != 0)
+	{
+		AddMovementInput(GetActorForwardVector(), InputValue);
+	}
 }
 
 void AHorde_PlayerCharacter::WalkSideways(float InputValue)
 {
+	if (InputValue != 0)
+	{
+		AddMovementInput(GetActorRightVector(), InputValue);
+	}
+}
 
+void AHorde_PlayerCharacter::SimpleJump()
+{
+	if (bIsJumping == false)
+	{
+		UCharacterMovementComponent* ThisCharMovementComp = GetCharacterMovement();
+		ThisCharMovementComp->JumpZVelocity = OriginalZVelocity * JumpForce;
+		Super::Jump();
+		bIsJumping = true;
+
+	}
 }
 
 // Called every frame
@@ -46,8 +70,18 @@ void AHorde_PlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerIn
 {
 	if (PlayerInputComponent != NULL)
 	{
+		// Camera Rotation based upon mouse axes
 		PlayerInputComponent->BindAxis("Yaw", this, &APawn::AddControllerYawInput);
 		PlayerInputComponent->BindAxis("Pitch", this, &APawn::AddControllerPitchInput);
+
+		// Character movement based upon input
+		PlayerInputComponent->BindAxis("Forward", this, &AHorde_PlayerCharacter::WalkForward);
+		PlayerInputComponent->BindAxis("Right", this, &AHorde_PlayerCharacter::WalkSideways);
+
+		// Character Jumping
+
+		PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AHorde_PlayerCharacter::SimpleJump);
+
 	}
 }
 

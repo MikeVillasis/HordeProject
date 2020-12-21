@@ -31,7 +31,7 @@ protected:
 	//Character Jump Settings
 	void SimpleJump();
 	float OriginalZVelocity;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Movement", meta = (ClampMin = 0.0f, ClampMax = 1.0f))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Movement")
 		float JumpForce;
 
 	// Called to bind functionality to input
