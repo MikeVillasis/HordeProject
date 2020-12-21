@@ -2,17 +2,12 @@
 
 
 #include "Player/Horde_PlayerCharacter.h"
-#include "Camera/CameraComponent.h"
 
 // Sets default values
 AHorde_PlayerCharacter::AHorde_PlayerCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
-	H_CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("Character Camera Component"));
-	H_CameraComponent->SetupAttachment(GetMesh());
-
 
 }
 
@@ -21,16 +16,6 @@ void AHorde_PlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
-}
-
-void AHorde_PlayerCharacter::WalkForward(float InputValue)
-{
-
-}
-
-void AHorde_PlayerCharacter::WalkSideways(float InputValue)
-{
-
 }
 
 // Called every frame
@@ -45,9 +30,5 @@ void AHorde_PlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerIn
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	if (PlayerInputComponent != NULL)
-	{
-
-	}
 }
 

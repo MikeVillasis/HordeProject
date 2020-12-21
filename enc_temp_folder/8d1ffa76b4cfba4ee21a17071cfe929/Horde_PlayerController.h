@@ -13,7 +13,5 @@ UCLASS()
 class HORDEPROJECT_API AHorde_PlayerController : public APlayerController
 {
 	GENERATED_BODY()
-
-public:
 	
 };
