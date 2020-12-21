@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Horde_PlayerCharacter.h"
+#include "Player/Horde_PlayerCharacter.h"
 
 // Sets default values
 AHorde_PlayerCharacter::AHorde_PlayerCharacter()
